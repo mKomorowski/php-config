@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: michal
- * Date: 28/09/14
- * Time: 12:50
- */
 
 namespace mKomorowski;
 
@@ -12,23 +6,22 @@ use Exception;
 
 class Config {
 
-    private $__configPath;
+    private $_configPath;
 
-    private $__defaultEnvironment = 'production';
+    private $_defaultEnvironment = 'production';
 
-    private $__environments = array(
-        'production', 'local'
-    );
+    private $_environments = array();
+    private $_hosts = array();
 
-    private $__hosts = array();
-
-    private $__settings = array();
+    private $_settings = array();
 
     public function __construct($configPath){
 
-        $this->__configPath = $configPath;
+        $this->_configPath = $configPath;
 
-        foreach($this->__environments as $env){
+        array_push($this->_environments, $this->_defaultEnvironment);
+
+        foreach($this->_environments as $env){
 
             $this->addEnvironment($env);
         }
@@ -45,9 +38,9 @@ class Config {
 
         if($this->__checkIfEnvExists($env)){
 
-            $this->__hosts[$env] = array();
+            $this->_hosts[$env] = array();
 
-            return array_push($this->__hosts[$env], $host);
+            return array_push($this->_hosts[$env], $host);
         }
 
         return true;
@@ -64,16 +57,34 @@ class Config {
 
         $env = $this->__determineEnvironment();
 
-        if(array_key_exists($key, $this->__settings[$env])){
+        if(array_key_exists($key, $this->_settings[$env])){
 
-            return $this->__settings[$env][$key];
-        }elseif(array_key_exists($key, $this->__settings[$this->__defaultEnvironment])){
+            return $this->_settings[$env][$key];
+        }elseif(array_key_exists($key, $this->_settings[$this->_defaultEnvironment])){
 
-            return $this->__settings[$this->__defaultEnvironment][$key];
+            return $this->_settings[$this->_defaultEnvironment][$key];
         }else{
 
             return null;
         }
+    }
+
+    /**
+     * Register setting
+     * @param $key
+     * @param $value
+     * @param bool $env
+     * @return mixed
+     */
+
+    public function setSetting($key, $value, $env = false){
+
+        if($env && $this->__checkIfEnvExists($env)){
+
+            return $this->_settings[$env][$key] = $value;
+        }
+
+        return $this->_settings[$this->_defaultEnvironment][$key] = $value;
     }
 
     /**
@@ -84,9 +95,9 @@ class Config {
 
     public function addEnvironment($env){
 
-        if(!array_key_exists($env, $this->__environments)){
+        if(!array_key_exists($env, $this->_environments)){
 
-            array_push($this->__environments, $env);
+            array_push($this->_environments, $env);
 
             return $this->__registerSettings($env);
         }
@@ -102,7 +113,7 @@ class Config {
 
     public function setDefaultEnvironment($env){
 
-        return $this->__defaultEnvironment = $env;
+        return $this->_defaultEnvironment = $env;
     }
 
     /**
@@ -112,7 +123,7 @@ class Config {
 
     private function __determineEnvironment(){
 
-        foreach($this->__hosts as $env => $hosts){
+        foreach($this->_hosts as $env => $hosts){
 
             if(in_array(gethostname(), $hosts)){
 
@@ -120,7 +131,7 @@ class Config {
             }
         }
 
-        return $this->__defaultEnvironment;
+        return $this->_defaultEnvironment;
     }
 
     /**
@@ -133,9 +144,9 @@ class Config {
 
         if($this->__checkIfEnvExists($env)){
 
-            $settings = require_once($this->__configPath.'/'.$env.'.php');
+            $settings = require_once($this->_configPath.'/'.$env.'.php');
 
-            $this->__settings[$env] = $settings;
+            $this->_settings[$env] = $settings;
 
             return true;
         }
@@ -152,8 +163,8 @@ class Config {
 
     private function __checkIfEnvExists($env){
 
-        if(!file_exists($this->__configPath.'/'.$env.'.php')) throw New Exception('Config file '.$env.'.php not found in directoy '.$this->__configPath);
+        if(!file_exists($this->_configPath.'/'.$env.'.php')) throw New Exception('Config file '.$env.'.php not found in directoy '.$this->_configPath);
 
         return true;
     }
-} 
+}
