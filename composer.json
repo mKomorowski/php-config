@@ -1,0 +1,23 @@
+{
+    "name": "mkomorowski/php-config",
+    "type": "library",
+    "description": "Simple class supporting different configuration values based on the environment",
+    "keywords": ["php", "config", "settings", "hosts", "environment"],
+    "homepage": "https://github.com/mKomorowski/php-config",
+    "license": "MIT",
+    "version" : "0.1.0",
+    "authors": [
+        {
+            "name": "Michal Komorowski",
+            "email": "mkomorowski@windowslive.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0"
+    },
+    "autoload": {
+        "files": [
+            "src/config-php/Config.php"
+        ]
+    }
+}
