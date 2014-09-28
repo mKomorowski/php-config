@@ -17,7 +17,7 @@
     },
     "autoload": {
         "files": [
-            "src/config-php/Config.php"
+            "src/php-config/Config.php"
         ]
     }
 }
