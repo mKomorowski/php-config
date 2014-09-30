@@ -8,7 +8,7 @@ class Config {
 
     private $_configPath;
 
-    private $_defaultEnvironment = 'production';
+    private $_defaultEnvironment;
 
     private $_environments = array();
     private $_hosts = array();
@@ -19,9 +19,13 @@ class Config {
 
         $this->_configPath = $configPath;
 
-        array_push($this->_environments, $this->_defaultEnvironment);
+        $settingFiles = scandir($configPath);
 
-        foreach($this->_environments as $env){
+        foreach($settingFiles as $file){
+
+            if(strpos($file, '.php') === false) continue;
+
+            $env = str_replace('.php', '', $file);
 
             $this->addEnvironment($env);
         }
@@ -163,7 +167,7 @@ class Config {
 
     private function __checkIfEnvExists($env){
 
-        if(!file_exists($this->_configPath.'/'.$env.'.php')) throw New Exception('Config file '.$env.'.php not found in directoy '.$this->_configPath);
+        if(!file_exists($this->_configPath.'/'.$env.'.php')) throw New Exception('Environment '.$env.' doesn\'t exists');
 
         return true;
     }
