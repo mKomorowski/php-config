@@ -10,7 +10,7 @@ Package can be installed via Composer by adding to ```composer.json``` require b
 ```javascript
 {
     "require": {
-        "aws/aws-sdk-php-laravel": "1.*"
+        "mkomorowski/php-config": "dev-master"
     }
 }
 ```
@@ -44,16 +44,8 @@ In class constructor we are specifing path to directory with config files
 ```php
 $config = new mKomorowski/Config('/app/config');
 ```
-
-By default it will look for ```production.php``` file, but you can change default environment name by
-```php
-$config->setDefaultEnvironment('global');
-```
-You can add custom environment by:
-```php
-$config->addEnvironment('local');
-```
-And then assign hostname to environment:
+It will register all settings under given environment names (it this example under 'local' and 'production' names)
+Then you can assign hostname to environment:
 ```php
 $config->addHostToEnvironment('local', 'myComputer');
 ```
