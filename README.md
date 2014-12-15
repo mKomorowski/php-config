@@ -43,13 +43,13 @@ return array(
 
 In class constructor we are specifing path to directory with config files.
 ```php
-$config = new mKomorowski/Config('/app/config');
+$config = new mKomorowski\Config('/app/config');
 ```
 It will register all settings under given environment names (it this example under ```local``` and ```production``` names).
 
 It will pick first settings (```local```) as default one, you can change that by:
 ```php
-$config = setDefaultEnvironment('production');
+$config->setDefaultEnvironment('production');
 ```
 
 Then you can assign hostname to environment:
