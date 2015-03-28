@@ -42,7 +42,7 @@ class Config {
 
         if($this->__checkIfEnvExists($env)){
 
-            $this->_hosts[$env] = array();
+            if(empty($this->_hosts[$env])) $this->_hosts[$env] = array();
 
             return array_push($this->_hosts[$env], $host);
         }
