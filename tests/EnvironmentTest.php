@@ -11,7 +11,8 @@ class ConfigEnvironmentsTest extends \PHPUnit_Framework_TestCase
     public function testConstruct()
     {
         $configEnvironments = new ConfigEnvironments(array(
-           'local' => array('ubuntu', 'localhost', 'macbook')
+           'local' => array('ubuntu', 'localhost', 'macbook'),
+           'stage' => array('staging')
         ));
 
         $environments = $configEnvironments->getSettings();
@@ -21,6 +22,8 @@ class ConfigEnvironmentsTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(in_array('localhost', $environments['local']));
 
         $this->assertTrue(in_array('macbook', $environments['local']));
+
+        $this->assertTrue(in_array('staging', $environments['stage']));
 
         $this->assertArrayHasKey('local', $environments);
     }
