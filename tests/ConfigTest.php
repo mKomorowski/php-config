@@ -1,7 +1,7 @@
 <?php
 
 use mKomorowski\Config\Loader;
-use mKomorowski\Config\ConfigEnvironments;
+use mKomorowski\Config\Environments;
 use mKomorowski\Config\Config;
 
 /**
@@ -10,7 +10,15 @@ use mKomorowski\Config\Config;
 
 class ConfigTest extends PHPUnit_Framework_TestCase
 {
+    /**
+     * @var object
+     */
+
     protected $config;
+
+    /**
+     * @var array
+     */
 
     protected $testEnvironments = array(
         'local' => array('ubuntu', 'localhost', 'macbook')
@@ -22,11 +30,11 @@ class ConfigTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $configLoader = new mKomorowski\Config\Loader(__DIR__.'/config');
+        $configLoader = new Loader(__DIR__.'/config');
 
-        $environments = new mKomorowski\Config\ConfigEnvironments($this->testEnvironments);
+        $environments = new Environments($this->testEnvironments);
 
-        $this->config = new mKomorowski\Config\Config($configLoader, $environments, 'production');
+        $this->config = new Config($configLoader, $environments, 'production');
     }
 
     /**

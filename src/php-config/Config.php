@@ -17,7 +17,7 @@ class Config
 
     protected $environments;
 
-    public function __construct(Loader $loader, ConfigEnvironments $configEnvironments, $defaultEnvironment = 'production')
+    public function __construct(ConfigLoader $loader, ConfigEnvironments $configEnvironments, $defaultEnvironment = 'production')
     {
         $this->settings = $loader->fetch();
 

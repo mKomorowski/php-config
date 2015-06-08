@@ -1,8 +1,8 @@
 <?php
 
-use mKomorowski\Config\ConfigEnvironments;
+use mKomorowski\Config\Environments;
 
-class ConfigEnvironmentsTest extends \PHPUnit_Framework_TestCase
+class EnvironmentsTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Test passing settings in constructor
@@ -10,7 +10,7 @@ class ConfigEnvironmentsTest extends \PHPUnit_Framework_TestCase
 
     public function testConstruct()
     {
-        $configEnvironments = new ConfigEnvironments(array(
+        $configEnvironments = new Environments(array(
            'local' => array('ubuntu', 'localhost', 'macbook'),
            'stage' => array('staging')
         ));
@@ -34,7 +34,7 @@ class ConfigEnvironmentsTest extends \PHPUnit_Framework_TestCase
 
     public function testCreatingNewEnvironment()
     {
-        $configEnvironments = new ConfigEnvironments;
+        $configEnvironments = new Environments;
 
         $configEnvironments->assignHosts('local', array('ubuntu'));
 
@@ -47,7 +47,7 @@ class ConfigEnvironmentsTest extends \PHPUnit_Framework_TestCase
 
     public function testNewlyCreatedEnvironmentHaveCorrectValues()
     {
-        $configEnvironments = new ConfigEnvironments;
+        $configEnvironments = new Environments;
 
         $configEnvironments->assignHosts('local', array('ubuntu', 'localhost', 'macbook'));
 

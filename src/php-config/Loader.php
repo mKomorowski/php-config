@@ -7,7 +7,7 @@ use RecursiveIteratorIterator, RecursiveDirectoryIterator;
  * @package mKomorowski\Config
  */
 
-class Loader
+class Loader implements ConfigLoader
 {
     /**
      * Directory with the settings files

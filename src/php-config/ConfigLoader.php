@@ -1,15 +1,15 @@
 <?php namespace mKomorowski\Config;
 
 /**
- * Interface ConfigEnvironments
+ * Interface ConfigLoader
  * @package mKomorowski\Config
  */
 
-interface ConfigEnvironments
+interface ConfigLoader
 {
     /**
      * @return array
      */
 
-    public function getSettings();
+    public function fetch();
 }
