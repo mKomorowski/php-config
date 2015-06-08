@@ -1,12 +1,23 @@
-<?php
-
-namespace mKomorowski\Config;
+<?php namespace mKomorowski\Config;
 
 use RecursiveIteratorIterator, RecursiveDirectoryIterator;
 
-class Loader {
+/**
+ * Class Loader
+ * @package mKomorowski\Config
+ */
 
+class Loader
+{
+    /**
+     * Directory with the settings files
+     * @var string
+     */
     protected $path;
+
+    /**
+     * @param string $path
+     */
 
     public function __construct($path)
     {
@@ -53,6 +64,7 @@ class Loader {
     }
 
     /**
+     * Check if the given path is a directory with correct read permissions
      * @return bool
      */
 

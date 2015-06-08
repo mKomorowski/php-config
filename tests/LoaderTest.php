@@ -5,6 +5,7 @@ use mKomorowski\Config\Loader;
 class FileTest extends \PHPUnit_Framework_TestCase
 {
     /**
+     * Test passing to Loader not existing directory
      * @expectedException mKomorowski\Config\LoaderException
      */
 
@@ -17,6 +18,11 @@ class FileTest extends \PHPUnit_Framework_TestCase
         $this->setExpectedException('mKomorowski\Config\LoaderException');
     }
 
+    /**
+     * Test passing to Loader valid directory
+     * Assert fetching setting to an array
+     */
+
     public function testValidDirectoryReturnArray()
     {
         $loader = new Loader(realpath(__DIR__.'/config'));
@@ -25,6 +31,11 @@ class FileTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue(is_array($data));
     }
+
+    /**
+     * Assert that Loader will load every available setting file in given directory
+     * @throws \mKomorowski\Config\LoaderException
+     */
 
     public function testArraySettingsHasKey()
     {
@@ -37,6 +48,11 @@ class FileTest extends \PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('production', $data);
     }
 
+    /**
+     * Assert that Loader will ignore directory while loading php settings files
+     * @throws \mKomorowski\Config\LoaderException
+     */
+
     public function testArraySettingsDoesNotHaveKey()
     {
         $loader = new Loader(realpath(__DIR__.'/config'));
@@ -45,6 +61,11 @@ class FileTest extends \PHPUnit_Framework_TestCase
 
         $this->assertArrayNotHasKey('dir', $data);
     }
+
+    /**
+     * Assert passing empty directory
+     * @throws \mKomorowski\Config\LoaderException
+     */
 
     public function testValidDirectorryWithoutConfigFiles()
     {

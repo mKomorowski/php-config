@@ -1,23 +1,21 @@
-<?php
+<?php namespace mKomorowski\Config;
 
-namespace mKomorowski\Config;
+/**
+ * Class Config
+ * @package mKomorowski\Config
+ */
 
-class Config{
+class Config
+{
+    /**
+     * @var string
+     */
+    
+    protected $defaultEnvironment = 'production';
 
-    protected $hosts;
-    protected $settings = array();
-    protected $environments = array();
-    protected $defaultEnvironment;
-
-    public function __construct(Loader $loader, Hosts $hosts, $defaultEnvironment = 'production')
+    public function __construct(Loader $loader, ConfigEnvironments $configEnvironments)
     {
-        $this->hosts = $hosts;
 
-        $this->settings = $loader->fetch();
-
-        $this->defaultEnvironment = $defaultEnvironment;
-
-        $this->environments = array_keys($this->settings);
     }
 
     public function set($key, $value)
