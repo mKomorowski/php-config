@@ -60,13 +60,19 @@ class ConfigTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Assertion for getting current environment, which should by either 'production' or 'local' in case hostname in in $testEnvironment array
+     * Assertion for has() function correctly determine if the key have value
      */
 
-    public function testGetEnvironment()
+    public function testHas()
     {
-        $expectedEnvironment = (in_array(gethostname(), $this->testEnvironments['local'])) ? 'local' : 'production';
+        $this->assertTrue($this->config->has('debug'));
 
-        $this->assertEquals($expectedEnvironment, $this->config->getEnvironment());
+        $this->assertTrue($this->config->has('database'));
+
+        $this->assertTrue($this->config->has('execution_time'));
+
+        $this->assertTrue($this->config->has('database.host'));
+
+        $this->assertFalse($this->config->has('database.error'));
     }
 }

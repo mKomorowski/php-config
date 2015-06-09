@@ -4,18 +4,20 @@ use mKomorowski\Config\Environments;
 
 class EnvironmentsTest extends \PHPUnit_Framework_TestCase
 {
+    protected $testEnvironments = array(
+        'local' => array('ubuntu', 'localhost', 'macbook', 'musgrave'),
+        'stage' => array('staging')
+    );
+
     /**
      * Test passing settings in constructor
      */
 
     public function testConstruct()
     {
-        $configEnvironments = new Environments(array(
-           'local' => array('ubuntu', 'localhost', 'macbook'),
-           'stage' => array('staging')
-        ));
+        $configEnvironments = new Environments($this->testEnvironments);
 
-        $environments = $configEnvironments->getSettings();
+        $environments = $configEnvironments->getSettings();;
 
         $this->assertTrue(in_array('ubuntu', $environments['local']));
 
@@ -60,5 +62,23 @@ class EnvironmentsTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(in_array('localhost', $localEnvironment));
 
         $this->assertFalse(in_array('staging', $localEnvironment));
+    }
+
+    /**
+     * Assertion for getting current environment, which should by either 'production' or 'local' in case hostname in in $testEnvironment array
+     */
+
+    public function testGetEnvironment()
+    {
+        $configEnvironments = new Environments($this->testEnvironments);
+
+        $expectedEnvironment = 'production';
+
+        foreach($this->testEnvironments as $key => $value)
+        {
+            if(in_array(gethostname(), $value)) $expectedEnvironment = $key;
+        }
+
+        $this->assertEquals($expectedEnvironment, $configEnvironments->getCurrentEnvironment('production'));
     }
 }

@@ -1,7 +1,8 @@
 <?php
 
 return array(
-    'debug' => false,
+    'debug' => true,
+    'execution_time' => 5,
     'database' => array(
         'host' => 'AmazonRDS',
         'password' => 'pass'

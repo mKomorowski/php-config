@@ -12,4 +12,11 @@ interface ConfigEnvironments
      */
 
     public function getSettings();
+
+    /**
+     * @param string $defaultEnvironment
+     * @return string
+     */
+
+    public function getCurrentEnvironment($defaultEnvironment);
 }
