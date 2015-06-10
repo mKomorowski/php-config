@@ -25,7 +25,7 @@ class Config
 
         $this->environments = $configEnvironments->getSettings();
 
-        $this->localEnvironment = $configEnvironments->getCurrentEnvironment($defaultEnvironment);
+        $this->localEnvironment = ($configEnvironments->getCurrentEnvironment()) ? $configEnvironments->getCurrentEnvironment() : $defaultEnvironment;
 
         $this->defaultEnvironment = $defaultEnvironment;
     }
@@ -41,23 +41,13 @@ class Config
     }
 
     /**
-     * Return name of the currently used Environment
-     * @return string
+     * @param string $key
+     * @return string|array|null
      */
 
-    public function getEnvironment()
+    public function get($key)
     {
-        foreach($this->environments as $key => $value)
-        {
-            if(is_array($value) && in_array(gethostname(), $value)) return $key;
-        }
-
-        return $this->defaultEnvironment;
-    }
-
-    public function set($key, $value)
-    {
-
+        return $this->getValue($key);
     }
 
     /**
@@ -79,7 +69,7 @@ class Config
 
     private function getValue($key)
     {
-        $environments = array($this->getEnvironment());
+        $environments = array($this->localEnvironment);
 
         if(!in_array($this->defaultEnvironment, $environments)) array_push($environments, $this->defaultEnvironment);
 

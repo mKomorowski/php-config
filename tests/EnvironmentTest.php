@@ -5,7 +5,7 @@ use mKomorowski\Config\Environments;
 class EnvironmentsTest extends \PHPUnit_Framework_TestCase
 {
     protected $testEnvironments = array(
-        'local' => array('ubuntu', 'localhost', 'macbook', 'musgrave'),
+        'local' => array('ubuntu', 'localhost', 'macbook'),
         'stage' => array('staging')
     );
 
@@ -72,13 +72,13 @@ class EnvironmentsTest extends \PHPUnit_Framework_TestCase
     {
         $configEnvironments = new Environments($this->testEnvironments);
 
-        $expectedEnvironment = 'production';
+        $expectedEnvironment = null;
 
         foreach($this->testEnvironments as $key => $value)
         {
             if(in_array(gethostname(), $value)) $expectedEnvironment = $key;
         }
 
-        $this->assertEquals($expectedEnvironment, $configEnvironments->getCurrentEnvironment('production'));
+        $this->assertEquals($expectedEnvironment, $configEnvironments->getCurrentEnvironment());
     }
 }

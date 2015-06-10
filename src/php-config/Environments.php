@@ -49,20 +49,18 @@ class Environments implements ConfigEnvironments
         return $this->settings;
     }
 
-    /**
-     * Return name of the currently used Environment
-     * @param string $defaultEnvironment
-     * @return string
+    /** Return name of the currently used Environment
+     * @return null|string
      */
 
-    public function getCurrentEnvironment($defaultEnvironment)
+    public function getCurrentEnvironment()
     {
         foreach($this->settings as $key => $value)
         {
             if(is_array($value) && in_array(gethostname(), $value)) return $key;
         }
 
-        return $defaultEnvironment;
+        return null;
     }
 
     /**
