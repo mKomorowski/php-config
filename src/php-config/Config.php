@@ -19,15 +19,17 @@ class Config
 
     protected $environments;
 
+    protected $configEnvironments;
+
     public function __construct(ConfigLoader $loader, ConfigEnvironments $configEnvironments, $defaultEnvironment = 'production')
     {
         $this->settings = $loader->fetch();
 
         $this->environments = $configEnvironments->getSettings();
 
-        $this->localEnvironment = ($configEnvironments->getCurrentEnvironment()) ? $configEnvironments->getCurrentEnvironment() : $defaultEnvironment;
+        $this->configEnvironments = $configEnvironments;
 
-        $this->defaultEnvironment = $defaultEnvironment;
+        $this->setDefaultEnvironment($defaultEnvironment);
     }
 
     /**
@@ -96,7 +98,7 @@ class Config
 
         foreach ($keys as $key)
         {
-            $settings = (!empty($settings[$key])) ? $settings[$key] : null;
+            $settings = (isset($settings[$key])) ? $settings[$key] : null;
         }
 
         return $settings;
@@ -121,5 +123,7 @@ class Config
     public function setDefaultEnvironment($environment)
     {
         $this->defaultEnvironment = $environment;
+
+        $this->localEnvironment = ($this->configEnvironments->getCurrentEnvironment()) ? $this->configEnvironments->getCurrentEnvironment() : $this->defaultEnvironment;
     }
 }

@@ -75,4 +75,34 @@ class ConfigTest extends PHPUnit_Framework_TestCase
 
         $this->assertFalse($this->config->has('database.error'));
     }
+
+    /**
+     * Assertion for get function return correct values
+     */
+
+    public function testGet()
+    {
+        $this->assertFalse($this->config->get('debug'));
+
+        $this->assertEquals(null, $this->config->get('log_level'));
+
+        $this->assertEquals(5, $this->config->get('execution_time'));
+
+        $this->assertEquals('AmazonRDS', $this->config->get('database.host'));
+    }
+
+    /**
+     * Assertion for get function return correct values after change default environment
+     */
+
+    public function testGetAfterChangeDefaultEnvironment()
+    {
+        $this->config->setDefaultEnvironment('local');
+
+        $this->assertTrue($this->config->get('debug'));
+
+        $this->assertEquals(null, $this->config->get('execution_time'));
+
+        $this->assertEquals('localhost', $this->config->get('database.host'));
+    }
 }
