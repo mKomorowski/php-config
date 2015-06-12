@@ -1,12 +1,12 @@
 php-config
 ==========
 
-Simple class supporting different configuration values based on the environment
+A simple class supporting different configuration values based on the environment
 
-Instalation
+Installation
 ----------
 
-Package can be installed via Composer by adding to ```composer.json``` require block.
+The package can be installed via Composer by adding to the ```composer.json``` require block.
 ```javascript
 {
     "require": {
@@ -15,7 +15,7 @@ Package can be installed via Composer by adding to ```composer.json``` require b
 }
 ```
 
-Then update application packages by runing command.
+Then update application packages by running the command:
 ```sh
 php composer.phar update
 ```
@@ -28,48 +28,56 @@ Examples of files with application configuration options.
 local.php
 ```php
 return array(
-  'database' => 'dev',
-  'paypay_api_key' => 'test',
+        'debug' => true,
+        'database' => array(
+            'host' => '127.0.0.1',
+            'password' => 'password',
+        ),
 );
 ```
 
 production.php
 ```php
 return array(
-  'database' => 'production',
-  'paypal_api_key' => 'live',
+        'debug' => false,
+        'database' => array(
+            'host' => 'rds.amazon.com',
+            'password' => 'password',
+        ),
 );
 ```
 
-In class constructor we are specifing path to directory with config files.
+In the settings loader we are specifying the path to the directory with config files.
 ```php
-$config = new mKomorowski\Config('/app/config');
+$loader = new mKomorowski\Config\Loader('/app/config');
 ```
-It will register all settings under given environment names (it this example under ```local``` and ```production``` names).
+Next we are defining the environment settings:
+```php
+$environment = new mKomorowski\Config\Environments(array(
+    'local' => array('local', 'MacBook.local'),
+    'stage' => array('cent_os_stage')
+));
+```
+Finally we initialize the Config class, passing settings and environments. The third paramater is an optional default environment.
+```php
+$config = new mKomorowski\Config\Config($loader, $environment, 'stage');
+```
 
-It will pick first settings (```local```) as default one, you can change that by:
+We can change the default environment later by:
 ```php
 $config->setDefaultEnvironment('production');
 ```
-
-Then you can assign hostname to environment:
-```php
-$config->addHostToEnvironment('local', 'myComputer');
-```
-```php
-$config->addHostToEnvironment('local', gethostname());
-```
-
 Usage
 ----------
 
-To retrieve setting just use:
+To retrieve the settings just use:
 ```php
-$config->getSetting('database');
+$config->get('debug');
 ```
-If your hosts is signed to specific environment it will return appropriate value. If not it look for default environment settings or return ```null``` if the key is not set
+Accessing nested values is possible with dotted notation
+```php
+$config->get('database.hostname');
+```
+If your hosts is signed to a specific environment it will return the appropriate value. If not it will look for default environment settings or return ```null``` if the key is not set.
 
-To add new setting you have to specify key, value and environment (If not, it will be registered under default one)
-```php
-$config->setSetting('timezone', 'UTC', 'local');
-```
+
