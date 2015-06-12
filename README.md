@@ -1,6 +1,9 @@
 php-config
 ==========
 
+[![Build Status](https://travis-ci.org/mKomorowski/php-config.svg?branch=master)](https://travis-ci.org/mKomorowski/php-config)
+[![Coverage Status](https://coveralls.io/repos/mKomorowski/php-config/badge.svg?branch=master)](https://coveralls.io/r/mKomorowski/php-config?branch=master)
+
 A simple class supporting different configuration values based on the environment
 
 Installation
