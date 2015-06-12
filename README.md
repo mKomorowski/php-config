@@ -1,6 +1,8 @@
 php-config
 ==========
 
+[![Build Status](https://travis-ci.org/mKomorowski/php-config.svg?branch=master)](https://travis-ci.org/mKomorowski/php-config)
+
 A simple class supporting different configuration values based on the environment
 
 Installation
