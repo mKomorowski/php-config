@@ -13,7 +13,7 @@ The package can be installed via Composer by adding to the ```composer.json``` r
 ```javascript
 {
     "require": {
-        "mkomorowski/php-config": "dev-master"
+        "mkomorowski/php-config": "1.0"
     }
 }
 ```
